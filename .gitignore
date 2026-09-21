@@ -1,0 +1,5 @@
+.agents
+.claude
+__pycache__
+.env
+tasks.md
