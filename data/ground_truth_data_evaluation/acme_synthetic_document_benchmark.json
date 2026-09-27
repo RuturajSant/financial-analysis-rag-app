@@ -1,0 +1,122 @@
+[
+  {
+    "id": "synth_001",
+    "type": "direct_lookup",
+    "question": "What was total revenue in FY2025?",
+    "expected_answer": "₹1,200 Crore",
+    "source_page": 1,
+    "context_snippet": "Revenue from operations for FY2025 stood at ₹1,200 Crore compared to ₹1,000 Crore in FY2024."
+  },
+  {
+    "id": "synth_002",
+    "type": "table_lookup",
+    "question": "What were total current liabilities in FY2025?",
+    "expected_answer": "₹250 Crore",
+    "source_page": 2,
+    "context_snippet": "Total Current Liabilities: ₹250 Crore (Trade Payables: ₹150 Cr, Short-term borrowings: ₹100 Cr)"
+  },
+  {
+    "id": "synth_003",
+    "type": "derived_metric",
+    "question": "What is the gross margin for FY2025?",
+    "expected_answer": "40.0% (Calculated as Gross Profit ₹480 Cr / Revenue ₹1,200 Cr * 100, where Gross Profit = ₹1,200 Cr Revenue - ₹720 Cr COGS)",
+    "source_page": 1,
+    "context_snippet": "Revenue from operations: ₹1,200 Crore. Cost of Goods Sold (COGS): ₹720 Crore."
+  },
+  {
+    "id": "synth_004",
+    "type": "derived_metric",
+    "question": "What is the current ratio for FY2025?",
+    "expected_answer": "2.0 (Calculated as Current Assets ₹500 Crore / Current Liabilities ₹250 Crore)",
+    "source_page": 2,
+    "context_snippet": "Total Current Assets: ₹500 Crore. Total Current Liabilities: ₹250 Crore."
+  },
+  {
+    "id": "synth_005",
+    "type": "yoy_comparison",
+    "question": "How did net income change in FY2025 compared to FY2024?",
+    "expected_answer": "Net income increased by ₹40 Crore (or +28.57%), rising from ₹140 Crore in FY2024 to ₹180 Crore in FY2025.",
+    "source_page": 1,
+    "context_snippet": "Profit After Tax (PAT) for FY2025 was ₹180 Crore against ₹140 Crore in the previous fiscal year."
+  },
+  {
+    "id": "synth_006",
+    "type": "narrative",
+    "question": "What risk factors does management highlight in the report?",
+    "expected_answer": "Management highlights three core risks: foreign exchange rate volatility, customer concentration in North America, and escalating cybersecurity threats.",
+    "source_page": 1,
+    "context_snippet": "Key Operational Risks: 1. Foreign currency exposure in USD/INR. 2. Over 60% revenue concentration in North America. 3. Growing cybersecurity threats to cloud infrastructure."
+  },
+  {
+    "id": "synth_007",
+    "type": "unanswerable",
+    "question": "What was the dividend per share declared for FY2025?",
+    "expected_answer": "Information not found in the document.",
+    "source_page": "N/A",
+    "context_snippet": null
+  },
+  {
+    "id": "synth_008",
+    "type": "unanswerable",
+    "question": "What are the company's Scope 1 carbon emission metrics?",
+    "expected_answer": "Information not found in the document.",
+    "source_page": "N/A",
+    "context_snippet": null
+  },
+  {
+    "id": "synth_009",
+    "type": "follow_up",
+    "question": "And what was the total revenue the year before?",
+    "expected_answer": "Total revenue in FY2024 was ₹1,000 Crore.",
+    "source_page": 1,
+    "context_snippet": "Revenue from operations for FY2025 stood at ₹1,200 Crore compared to ₹1,000 Crore in FY2024."
+  },
+  {
+    "id": "synth_010",
+    "type": "summary",
+    "question": "Summarize the balance sheet position for FY2025.",
+    "expected_answer": "For FY2025, the company maintains strong liquidity with Current Assets of ₹500 Crore exceeding Current Liabilities of ₹250 Crore (Current Ratio: 2.0). Solvency is stable with Total Debt of ₹100 Crore against Shareholders' Equity of ₹600 Crore (Debt-to-Equity: 0.17).",
+    "source_page": 2,
+    "context_snippet": "Balance Sheet Highlights FY2025: Current Assets: ₹500 Cr, Current Liabilities: ₹250 Cr, Total Debt: ₹100 Cr, Shareholders' Equity: ₹600 Cr."
+  },
+  {
+    "id": "synth_011",
+    "type": "direct_lookup",
+    "question": "What was the Cost of Goods Sold (COGS) in FY2025?",
+    "expected_answer": "₹720 Crore",
+    "source_page": 1,
+    "context_snippet": "Cost of Goods Sold (COGS) for the fiscal year ended March 31, 2025 was ₹720 Crore."
+  },
+  {
+    "id": "synth_012",
+    "type": "table_lookup",
+    "question": "What was the Operating Cash Flow in FY2025?",
+    "expected_answer": "₹210 Crore",
+    "source_page": 3,
+    "context_snippet": "Net Cash generated from Operating Activities (CFO): ₹210 Crore."
+  },
+  {
+    "id": "synth_013",
+    "type": "derived_metric",
+    "question": "What was the Free Cash Flow (FCF) for FY2025?",
+    "expected_answer": "₹160 Crore (Calculated as Operating Cash Flow ₹210 Cr - Capital Expenditures ₹50 Cr)",
+    "source_page": 3,
+    "context_snippet": "Operating Cash Flow: ₹210 Crore. Capital Expenditures (Purchase of Property, Plant & Equipment): ₹50 Crore."
+  },
+  {
+    "id": "synth_014",
+    "type": "yoy_comparison",
+    "question": "What was the year-over-year percentage revenue growth from FY2024 to FY2025?",
+    "expected_answer": "20.0% growth (calculated as (₹1,200 Cr - ₹1,000 Cr) / ₹1,000 Cr * 100)",
+    "source_page": 1,
+    "context_snippet": "Revenue stood at ₹1,200 Crore in FY2025 vs ₹1,000 Crore in FY2024."
+  },
+  {
+    "id": "synth_015",
+    "type": "follow_up",
+    "question": "And what was the net income for that same prior year?",
+    "expected_answer": "Net income in FY2024 was ₹140 Crore.",
+    "source_page": 1,
+    "context_snippet": "PAT for FY2025 was ₹180 Crore against ₹140 Crore in FY2024."
+  }
+]

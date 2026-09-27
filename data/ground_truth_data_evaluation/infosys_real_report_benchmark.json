@@ -1,0 +1,50 @@
+[
+  {
+    "id": "infosys_001",
+    "type": "direct_lookup",
+    "question": "What was the reported metric value in: 'Unearned revenue 11,838 8,492...'?",
+    "expected_answer": "Unearned revenue 11,838 8,492",
+    "source_page": 69,
+    "context_snippet": "Unearned revenue 11,838 8,492"
+  },
+  {
+    "id": "infosys_002",
+    "type": "direct_lookup",
+    "question": "What was the reported metric value in: 'Revenue on time-and-material and unit of work-base...'?",
+    "expected_answer": "Revenue on time-and-material and unit of work-based contracts,",
+    "source_page": 73,
+    "context_snippet": "Revenue on time-and-material and unit of work-based contracts,"
+  },
+  {
+    "id": "infosys_003",
+    "type": "derived_metric",
+    "question": "What is the net profit margin for Infosys?",
+    "expected_answer": "Refer to statement of profit and loss for calculations.",
+    "source_page": 1,
+    "context_snippet": "Statutory reports\nManagement’s discussion and analysis\nOverview II. Opportunities and threats\nInfosys is a leading provider of AI-first business consulting and Our strategy\ntechnology services, enabli"
+  },
+  {
+    "id": "infosys_004",
+    "type": "narrative",
+    "question": "What operational risks or business highlights are discussed for Infosys?",
+    "expected_answer": "Management discusses operational strategy, market positioning, and revenue growth in MD&A.",
+    "source_page": 1,
+    "context_snippet": "Statutory reports\nManagement’s discussion and analysis\nOverview II. Opportunities and threats\nInfosys is a leading provider of AI-first business consulting and Our strategy\ntechnology services, enabli"
+  },
+  {
+    "id": "infosys_005",
+    "type": "unanswerable",
+    "question": "What is the projected revenue target for FY2035?",
+    "expected_answer": "Information not found in the document.",
+    "source_page": "N/A",
+    "context_snippet": null
+  },
+  {
+    "id": "infosys_006",
+    "type": "summary",
+    "question": "Summarize the overall performance of Infosys from the MD&A report.",
+    "expected_answer": "Infosys reported operational metrics in line with MD&A disclosures.",
+    "source_page": 1,
+    "context_snippet": "Statutory reports\nManagement’s discussion and analysis\nOverview II. Opportunities and threats\nInfosys is a leading provider of AI-first business consulting and Our strategy\ntechnology services, enabli"
+  }
+]

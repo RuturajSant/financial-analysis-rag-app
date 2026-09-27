@@ -17,6 +17,22 @@ logger = get_logger(__name__)
 _SUPPORTED_PROVIDERS = {"openai", "anthropic", "google"}
 
 
+def extract_text(content) -> str:
+    """Normalise LLM response content to a plain string.
+
+    Google GenAI models may return content as a list of typed blocks, e.g.
+    [{'type': 'text', 'text': '...', ...}].  This helper extracts and
+    concatenates only the 'text' blocks.  For providers that return a plain
+    string, it passes through unchanged.
+    """
+    if isinstance(content, list):
+        return " ".join(
+            block["text"] for block in content
+            if isinstance(block, dict) and block.get("type") == "text"
+        ).strip()
+    return content
+
+
 def get_chat_llm(**overrides):
     """
     Return a LangChain chat model for the configured provider.
@@ -46,6 +62,7 @@ def get_chat_llm(**overrides):
         from langchain_openai import ChatOpenAI
 
         llm = ChatOpenAI(
+            base_url="http://localhost:20128/v1",
             model=model,
             openai_api_key=settings.openai_api_key,
             **overrides,
@@ -56,6 +73,7 @@ def get_chat_llm(**overrides):
 
         llm = ChatAnthropic(
             model=model,
+            anthropic_api_url="http://localhost:20128/v1",
             anthropic_api_key=settings.anthropic_api_key,
             **overrides,
         )

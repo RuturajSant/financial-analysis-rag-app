@@ -9,7 +9,7 @@ Design (from references/retrieval.md):
 from __future__ import annotations
 
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
-from backend.core.llm_provider import get_chat_llm
+from backend.core.llm_provider import extract_text, get_chat_llm
 
 from backend.agents.state import GraphState
 from backend.core.config import settings
@@ -56,7 +56,7 @@ def _maybe_rewrite_query(state: GraphState, query: str) -> str:
     history_turns = []
     for msg in state["messages"][-4:]:
         role = "User" if isinstance(msg, HumanMessage) else "Assistant"
-        history_turns.append(f"{role}: {msg.content[:200]}")
+        history_turns.append(f"{role}: {extract_text(msg.content)[:200]}")
     history = "\n".join(history_turns)
 
     rewrite_prompt = (
@@ -67,7 +67,7 @@ def _maybe_rewrite_query(state: GraphState, query: str) -> str:
     llm = get_chat_llm(temperature=0, max_tokens=60)
     try:
         result = llm.invoke([HumanMessage(content=rewrite_prompt)])
-        rewritten = result.content.strip().strip('"').strip("'")
+        rewritten = extract_text(result.content).strip().strip('"').strip("'")
         logger.info("query_rewritten", extra={"original": query, "rewritten": rewritten})
         return rewritten
     except Exception as exc:
@@ -79,7 +79,7 @@ def retrieve_and_answer(state: GraphState) -> GraphState:
     """Retrieval Agent node — search, generate answer, append citations."""
     doc_id = state["doc_id"]
     last_message = state["messages"][-1]
-    raw_query = last_message.content if hasattr(last_message, "content") else str(last_message)
+    raw_query = extract_text(last_message.content) if hasattr(last_message, "content") else str(last_message)
 
     query = _maybe_rewrite_query(state, raw_query)
 
@@ -115,7 +115,7 @@ def retrieve_and_answer(state: GraphState) -> GraphState:
             SystemMessage(content=_SYSTEM_PROMPT),
             HumanMessage(content=f"Document context:\n{context_str}\n\nQuestion: {raw_query}"),
         ])
-        answer = response.content.strip()
+        answer = extract_text(response.content).strip()
     except Exception as exc:
         logger.error("llm_generation_failed", extra={"error": str(exc)})
         return {**state, "error": f"Answer generation failed: {exc}"}

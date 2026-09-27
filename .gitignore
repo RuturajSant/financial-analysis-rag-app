@@ -3,3 +3,4 @@
 __pycache__
 .env
 tasks.md
+app.log

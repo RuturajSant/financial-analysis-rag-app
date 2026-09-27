@@ -8,7 +8,7 @@ Design:
 """
 from __future__ import annotations
 
-from backend.core.llm_provider import get_chat_llm
+from backend.core.llm_provider import extract_text, get_chat_llm
 from langchain_core.messages import HumanMessage, SystemMessage
 
 from backend.agents.state import GraphState
@@ -31,7 +31,7 @@ Respond with ONLY one word: kpi, summary, or retrieval.
 def route_intent(state: GraphState) -> GraphState:
     """Classify the latest message and set state['intent']."""
     last_message = state["messages"][-1]
-    content = last_message.content if hasattr(last_message, "content") else str(last_message)
+    content = extract_text(last_message.content) if hasattr(last_message, "content") else str(last_message)
 
     router_llm = get_chat_llm(temperature=0, max_tokens=5)
 
@@ -40,7 +40,7 @@ def route_intent(state: GraphState) -> GraphState:
             SystemMessage(content=_SYSTEM_PROMPT),
             HumanMessage(content=content),
         ])
-        raw = response.content.strip().lower()
+        raw = extract_text(response.content).strip().lower()
         intent = raw if raw in {"kpi", "summary", "retrieval"} else "retrieval"
     except Exception as exc:
         logger.warning("router_fallback", extra={"error": str(exc)})

@@ -1,0 +1,58 @@
+[
+  {
+    "id": "titan_001",
+    "type": "direct_lookup",
+    "question": "What was the reported metric value in: 'delivered yet another year of strong performance, ...'?",
+    "expected_answer": "delivered yet another year of strong performance, achieving a robust 28% revenue growth and crossing a commendable",
+    "source_page": 1,
+    "context_snippet": "delivered yet another year of strong performance, achieving a robust 28% revenue growth and crossing a commendable"
+  },
+  {
+    "id": "titan_002",
+    "type": "direct_lookup",
+    "question": "What was the reported metric value in: 'Balance with revenue authorities 106 139...'?",
+    "expected_answer": "Balance with revenue authorities 106 139",
+    "source_page": 61,
+    "context_snippet": "Balance with revenue authorities 106 139"
+  },
+  {
+    "id": "titan_003",
+    "type": "direct_lookup",
+    "question": "What was the reported metric value in: 'Balance with revenue authorities {refer note (a) b...'?",
+    "expected_answer": "Balance with revenue authorities {refer note (a) below} 1,485 1,267",
+    "source_page": 66,
+    "context_snippet": "Balance with revenue authorities {refer note (a) below} 1,485 1,267"
+  },
+  {
+    "id": "titan_004",
+    "type": "derived_metric",
+    "question": "What is the net profit margin for Titan?",
+    "expected_answer": "Refer to statement of profit and loss for calculations.",
+    "source_page": 1,
+    "context_snippet": "Management Discussion & Analysis\nPerformance during the Financial Year 2025-26\nAmidst a volatile business environment characterised by significant geopolitical events and global trade uncertainty, the"
+  },
+  {
+    "id": "titan_005",
+    "type": "narrative",
+    "question": "What operational risks or business highlights are discussed for Titan?",
+    "expected_answer": "Management discusses operational strategy, market positioning, and revenue growth in MD&A.",
+    "source_page": 1,
+    "context_snippet": "Management Discussion & Analysis\nPerformance during the Financial Year 2025-26\nAmidst a volatile business environment characterised by significant geopolitical events and global trade uncertainty, the"
+  },
+  {
+    "id": "titan_006",
+    "type": "unanswerable",
+    "question": "What is the projected revenue target for FY2035?",
+    "expected_answer": "Information not found in the document.",
+    "source_page": "N/A",
+    "context_snippet": null
+  },
+  {
+    "id": "titan_007",
+    "type": "summary",
+    "question": "Summarize the overall performance of Titan from the MD&A report.",
+    "expected_answer": "Titan reported operational metrics in line with MD&A disclosures.",
+    "source_page": 1,
+    "context_snippet": "Management Discussion & Analysis\nPerformance during the Financial Year 2025-26\nAmidst a volatile business environment characterised by significant geopolitical events and global trade uncertainty, the"
+  }
+]

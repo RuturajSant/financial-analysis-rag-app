@@ -1,0 +1,42 @@
+[
+  {
+    "id": "dixon_001",
+    "type": "direct_lookup",
+    "question": "What was the reported metric value in: 'FY 2025-26 to 2030-31, subject to fulfilment of pr...'?",
+    "expected_answer": "FY 2025-26 to 2030-31, subject to fulfilment of prescribed investment and incremental revenue thresholds in",
+    "source_page": 115,
+    "context_snippet": "FY 2025-26 to 2030-31, subject to fulfilment of prescribed investment and incremental revenue thresholds in"
+  },
+  {
+    "id": "dixon_002",
+    "type": "derived_metric",
+    "question": "What is the net profit margin for Dixon?",
+    "expected_answer": "Refer to statement of profit and loss for calculations.",
+    "source_page": 1,
+    "context_snippet": "Corporate Overview Statutory Reports Financial Statements\nManagement\nDiscussion and\nAnalysis\nGlobal Economic Environment\nThe global macroeconomic landscape became According to the International Moneta"
+  },
+  {
+    "id": "dixon_003",
+    "type": "narrative",
+    "question": "What operational risks or business highlights are discussed for Dixon?",
+    "expected_answer": "Management discusses operational strategy, market positioning, and revenue growth in MD&A.",
+    "source_page": 1,
+    "context_snippet": "Corporate Overview Statutory Reports Financial Statements\nManagement\nDiscussion and\nAnalysis\nGlobal Economic Environment\nThe global macroeconomic landscape became According to the International Moneta"
+  },
+  {
+    "id": "dixon_004",
+    "type": "unanswerable",
+    "question": "What is the projected revenue target for FY2035?",
+    "expected_answer": "Information not found in the document.",
+    "source_page": "N/A",
+    "context_snippet": null
+  },
+  {
+    "id": "dixon_005",
+    "type": "summary",
+    "question": "Summarize the overall performance of Dixon from the MD&A report.",
+    "expected_answer": "Dixon reported operational metrics in line with MD&A disclosures.",
+    "source_page": 1,
+    "context_snippet": "Corporate Overview Statutory Reports Financial Statements\nManagement\nDiscussion and\nAnalysis\nGlobal Economic Environment\nThe global macroeconomic landscape became According to the International Moneta"
+  }
+]

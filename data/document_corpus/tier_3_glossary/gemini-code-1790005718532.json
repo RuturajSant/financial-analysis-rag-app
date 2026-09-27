@@ -1,0 +1,302 @@
+[
+  {
+    "id": "term_001",
+    "section_type": "GLOSSARY",
+    "category": "Profitability",
+    "term": "Revenue from Operations",
+    "aliases": ["Total Revenue", "Revenue", "Sales"],
+    "definition": "Total gross inflow of cash or receivables generated from selling core goods or rendering services during an accounting period, prior to deducting any operational expenses.",
+    "formula": "Units Sold * Selling Price per Unit",
+    "required_variables": ["Units Sold", "Selling Price per Unit"]
+  },
+  {
+    "id": "term_002",
+    "section_type": "GLOSSARY",
+    "category": "Profitability",
+    "term": "Cost of Goods Sold",
+    "aliases": ["COGS", "Cost of Sales"],
+    "definition": "Direct expenses incurred to produce or acquire products sold by the business, including raw material purchases, direct manufacturing labor, and freight-in costs.",
+    "formula": "Beginning Inventory + Direct Purchases - Ending Inventory",
+    "required_variables": ["Beginning Inventory", "Direct Purchases", "Ending Inventory"]
+  },
+  {
+    "id": "term_003",
+    "section_type": "GLOSSARY",
+    "category": "Profitability",
+    "term": "Gross Profit",
+    "aliases": ["Gross Earnings"],
+    "definition": "Residual earnings remaining after subtracting direct manufacturing or procurement costs from total operating revenue.",
+    "formula": "Revenue - COGS",
+    "required_variables": ["Revenue", "COGS"]
+  },
+  {
+    "id": "term_004",
+    "section_type": "GLOSSARY",
+    "category": "Profitability",
+    "term": "Gross Margin",
+    "aliases": ["Gross Profit Margin"],
+    "definition": "Percentage of revenue retained as profit after covering direct production costs, reflecting core manufacturing or sourcing efficiency.",
+    "formula": "(Gross Profit / Revenue) * 100",
+    "required_variables": ["Gross Profit", "Revenue"]
+  },
+  {
+    "id": "term_005",
+    "section_type": "GLOSSARY",
+    "category": "Profitability",
+    "term": "Operating Expenses",
+    "aliases": ["OpEx", "SG&A"],
+    "definition": "Indirect operational expenditures required to maintain business activities, including administrative salaries, sales and marketing, research and development, and rent.",
+    "formula": "SG&A Expenses + R&D Expenses + Other Indirect Expenses",
+    "required_variables": ["SG&A Expenses", "R&D Expenses", "Other Indirect Expenses"]
+  },
+  {
+    "id": "term_006",
+    "section_type": "GLOSSARY",
+    "category": "Profitability",
+    "term": "Operating Profit",
+    "aliases": ["EBIT", "Operating Income"],
+    "definition": "Earnings Before Interest and Taxes; measures profits derived purely from core operational activities, excluding financing structure and tax liabilities.",
+    "formula": "Gross Profit - OpEx",
+    "required_variables": ["Gross Profit", "OpEx"]
+  },
+  {
+    "id": "term_007",
+    "section_type": "GLOSSARY",
+    "category": "Profitability",
+    "term": "EBITDA",
+    "aliases": ["Operating Cash Profit"],
+    "definition": "Earnings Before Interest, Taxes, Depreciation, and Amortization; evaluates operational cash profitability by adding non-cash accounting adjustments back to operating earnings.",
+    "formula": "EBIT + Depreciation + Amortization",
+    "required_variables": ["EBIT", "Depreciation", "Amortization"]
+  },
+  {
+    "id": "term_008",
+    "section_type": "GLOSSARY",
+    "category": "Profitability",
+    "term": "Operating Margin",
+    "aliases": ["EBIT Margin", "Operating Profit Margin"],
+    "definition": "Proportion of top-line revenue converted into operational profit, indicating overhead cost control and core business profitability.",
+    "formula": "(EBIT / Revenue) * 100",
+    "required_variables": ["EBIT", "Revenue"]
+  },
+  {
+    "id": "term_009",
+    "section_type": "GLOSSARY",
+    "category": "Profitability",
+    "term": "Profit Before Tax",
+    "aliases": ["PBT", "EBT"],
+    "definition": "Profitability level achieved after deducting operating expenses, non-cash depreciation charges, and net interest expenses, immediately preceding income tax liabilities.",
+    "formula": "EBIT - Interest Expense",
+    "required_variables": ["EBIT", "Interest Expense"]
+  },
+  {
+    "id": "term_010",
+    "section_type": "GLOSSARY",
+    "category": "Profitability",
+    "term": "Net Income",
+    "aliases": ["Net Profit", "PAT", "Profit After Tax", "Profit for the period"],
+    "definition": "Profit After Tax; the final bottom-line earnings available to shareholders after satisfying all operational costs, debt service obligations, and tax liabilities.",
+    "formula": "PBT - Tax Expense",
+    "required_variables": ["PBT", "Tax Expense"]
+  },
+  {
+    "id": "term_011",
+    "section_type": "GLOSSARY",
+    "category": "Profitability",
+    "term": "Net Margin",
+    "aliases": ["Net Profit Margin", "PAT Margin"],
+    "definition": "Percentage of revenue retained as net profit after deducting all operational, financial, and tax costs.",
+    "formula": "(Net Income / Revenue) * 100",
+    "required_variables": ["Net Income", "Revenue"]
+  },
+  {
+    "id": "term_012",
+    "section_type": "GLOSSARY",
+    "category": "Profitability",
+    "term": "Earnings Per Share",
+    "aliases": ["EPS", "Basic EPS"],
+    "definition": "Net profit allocated to each individual outstanding share of common stock over a reporting period.",
+    "formula": "(Net Income - Preferred Dividends) / Weighted Average Common Shares Outstanding",
+    "required_variables": ["Net Income", "Preferred Dividends", "Weighted Average Common Shares Outstanding"]
+  },
+  {
+    "id": "term_013",
+    "section_type": "GLOSSARY",
+    "category": "Liquidity",
+    "term": "Current Assets",
+    "aliases": ["Short-Term Assets"],
+    "definition": "Short-term economic resources owned by a firm that are expected to be converted into cash or consumed within 12 months or one operating cycle.",
+    "formula": "Cash & Equivalents + Trade Receivables + Inventories + Other Short-Term Assets",
+    "required_variables": ["Cash & Equivalents", "Trade Receivables", "Inventories", "Other Short-Term Assets"]
+  },
+  {
+    "id": "term_014",
+    "section_type": "GLOSSARY",
+    "category": "Liquidity",
+    "term": "Current Liabilities",
+    "aliases": ["Short-Term Obligations"],
+    "definition": "Short-term financial obligations due for settlement within 12 months or one operating cycle.",
+    "formula": "Trade Payables + Short-Term Debt + Other Current Liabilities",
+    "required_variables": ["Trade Payables", "Short-Term Debt", "Other Current Liabilities"]
+  },
+  {
+    "id": "term_015",
+    "section_type": "GLOSSARY",
+    "category": "Liquidity",
+    "term": "Working Capital",
+    "aliases": ["Net Working Capital", "NWC"],
+    "definition": "Net short-term capital available to fund day-to-day business operations and near-term obligations.",
+    "formula": "Current Assets - Current Liabilities",
+    "required_variables": ["Current Assets", "Current Liabilities"]
+  },
+  {
+    "id": "term_016",
+    "section_type": "GLOSSARY",
+    "category": "Liquidity",
+    "term": "Current Ratio",
+    "aliases": ["Working Capital Ratio"],
+    "definition": "A fundamental liquidity metric testing whether short-term assets are sufficient to satisfy short-term liabilities.",
+    "formula": "Current Assets / Current Liabilities",
+    "required_variables": ["Current Assets", "Current Liabilities"]
+  },
+  {
+    "id": "term_017",
+    "section_type": "GLOSSARY",
+    "category": "Liquidity",
+    "term": "Quick Ratio",
+    "aliases": ["Acid-Test Ratio"],
+    "definition": "Strict liquidity assessment measuring short-term debt coverage using only highly liquid assets (excluding illiquid inventory).",
+    "formula": "(Cash & Equivalents + Marketable Securities + Trade Receivables) / Current Liabilities",
+    "required_variables": ["Cash & Equivalents", "Marketable Securities", "Trade Receivables", "Current Liabilities"]
+  },
+  {
+    "id": "term_018",
+    "section_type": "GLOSSARY",
+    "category": "Liquidity",
+    "term": "Trade Receivables",
+    "aliases": ["Accounts Receivable", "AR"],
+    "definition": "Uncollected balance of money owed to the firm by customers for goods or services delivered on credit terms.",
+    "formula": "Sum of outstanding customer credit invoices",
+    "required_variables": ["Accounts Receivable Balance"]
+  },
+  {
+    "id": "term_019",
+    "section_type": "GLOSSARY",
+    "category": "Liquidity",
+    "term": "Trade Payables",
+    "aliases": ["Accounts Payable", "AP"],
+    "definition": "Outstanding balance of short-term debt owed by the company to vendors or suppliers for goods and services received on credit.",
+    "formula": "Sum of outstanding vendor credit bills",
+    "required_variables": ["Accounts Payable Balance"]
+  },
+  {
+    "id": "term_020",
+    "section_type": "GLOSSARY",
+    "category": "Liquidity",
+    "term": "Property, Plant, and Equipment",
+    "aliases": ["PPE", "Net PPE", "Fixed Assets"],
+    "definition": "Long-term tangible assets critical to operations, reported net of accumulated depreciation.",
+    "formula": "Gross PPE - Accumulated Depreciation",
+    "required_variables": ["Gross PPE", "Accumulated Depreciation"]
+  },
+  {
+    "id": "term_021",
+    "section_type": "GLOSSARY",
+    "category": "Liquidity",
+    "term": "Shareholders' Equity",
+    "aliases": ["Total Equity", "Net Worth", "Book Value"],
+    "definition": "Residual claim on total business assets remaining after settling all outstanding liabilities.",
+    "formula": "Total Assets - Total Liabilities",
+    "required_variables": ["Total Assets", "Total Liabilities"]
+  },
+  {
+    "id": "term_022",
+    "section_type": "GLOSSARY",
+    "category": "Solvency",
+    "term": "Total Debt",
+    "aliases": ["Gross Debt", "Total Borrowings"],
+    "definition": "Aggregated financial obligations combining short-term obligations, current portions of long-term loans, and non-current borrowings.",
+    "formula": "Short-Term Debt + Long-Term Debt",
+    "required_variables": ["Short-Term Debt", "Long-Term Debt"]
+  },
+  {
+    "id": "term_023",
+    "section_type": "GLOSSARY",
+    "category": "Solvency",
+    "term": "Debt-to-Equity Ratio",
+    "aliases": ["D/E Ratio", "Leverage Ratio"],
+    "definition": "Financial leverage indicator measuring the proportion of corporate financing funded by debt relative to equity capital.",
+    "formula": "Total Debt / Shareholders' Equity",
+    "required_variables": ["Total Debt", "Shareholders' Equity"]
+  },
+  {
+    "id": "term_024",
+    "section_type": "GLOSSARY",
+    "category": "Solvency",
+    "term": "Interest Coverage Ratio",
+    "aliases": ["Times Interest Earned", "TIE"],
+    "definition": "Solvency indicator evaluating how comfortably operating earnings cover required interest payments on debt.",
+    "formula": "EBIT / Interest Expense",
+    "required_variables": ["EBIT", "Interest Expense"]
+  },
+  {
+    "id": "term_025",
+    "section_type": "GLOSSARY",
+    "category": "Efficiency",
+    "term": "Return on Equity",
+    "aliases": ["ROE"],
+    "definition": "Financial performance metric assessing how effectively management generates profits using shareholder capital.",
+    "formula": "(Net Income / Shareholders' Equity) * 100",
+    "required_variables": ["Net Income", "Shareholders' Equity"]
+  },
+  {
+    "id": "term_026",
+    "section_type": "GLOSSARY",
+    "category": "Efficiency",
+    "term": "Return on Capital Employed",
+    "aliases": ["ROCE"],
+    "definition": "Efficiency metric evaluating profitability relative to total capital actively invested in core operations.",
+    "formula": "(EBIT / (Total Assets - Current Liabilities)) * 100",
+    "required_variables": ["EBIT", "Total Assets", "Current Liabilities"]
+  },
+  {
+    "id": "term_027",
+    "section_type": "GLOSSARY",
+    "category": "Efficiency",
+    "term": "Asset Turnover Ratio",
+    "aliases": ["Asset Turnover"],
+    "definition": "Efficiency metric measuring how effectively a company utilizes its total asset base to generate revenue.",
+    "formula": "Revenue / Average Total Assets",
+    "required_variables": ["Revenue", "Average Total Assets"]
+  },
+  {
+    "id": "term_028",
+    "section_type": "GLOSSARY",
+    "category": "Cash Flow",
+    "term": "Operating Cash Flow",
+    "aliases": ["CFO", "Cash Flow from Operations"],
+    "definition": "Net cash generated or consumed directly by primary revenue-producing operational activities, adjusting net income for non-cash expenses and working capital changes.",
+    "formula": "Net Income + Non-Cash Items - Change in Working Capital",
+    "required_variables": ["Net Income", "Non-Cash Items", "Change in Working Capital"]
+  },
+  {
+    "id": "term_029",
+    "section_type": "GLOSSARY",
+    "category": "Cash Flow",
+    "term": "Capital Expenditures",
+    "aliases": ["CapEx"],
+    "definition": "Cash spent acquiring, maintaining, or upgrading physical fixed assets such as property, plants, or equipment.",
+    "formula": "Ending Net PPE - Beginning Net PPE + Depreciation",
+    "required_variables": ["Ending Net PPE", "Beginning Net PPE", "Depreciation"]
+  },
+  {
+    "id": "term_030",
+    "section_type": "GLOSSARY",
+    "category": "Cash Flow",
+    "term": "Free Cash Flow",
+    "aliases": ["FCF", "Free Cash Flow to Firm"],
+    "definition": "Net operational cash remaining after funding necessary capital expenditures, available for debt repayment, dividends, or acquisitions.",
+    "formula": "Operating Cash Flow - CapEx",
+    "required_variables": ["Operating Cash Flow", "CapEx"]
+  }
+]

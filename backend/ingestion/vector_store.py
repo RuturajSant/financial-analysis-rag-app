@@ -13,7 +13,7 @@ from typing import Any
 
 import chromadb
 from chromadb import Collection
-from langchain_openai import OpenAIEmbeddings
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from rank_bm25 import BM25Okapi
 from sentence_transformers import CrossEncoder
 
@@ -26,17 +26,17 @@ logger = get_logger(__name__)
 EXPECTED_EMBED_MODEL = settings.embed_model
 
 # Lazy singletons
-_embedder: OpenAIEmbeddings | None = None
+_embedder: GoogleGenerativeAIEmbeddings | None = None
 _reranker: CrossEncoder | None = None
 _chroma_client: chromadb.PersistentClient | None = None
 
 
-def _get_embedder() -> OpenAIEmbeddings:
+def _get_embedder() -> GoogleGenerativeAIEmbeddings:
     global _embedder
     if _embedder is None:
-        _embedder = OpenAIEmbeddings(
+        _embedder = GoogleGenerativeAIEmbeddings(
             model=settings.embed_model,
-            openai_api_key=settings.openai_api_key,
+            google_api_key=settings.google_api_key,
         )
     return _embedder
 

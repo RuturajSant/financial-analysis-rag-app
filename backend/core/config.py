@@ -7,7 +7,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(override=True)
 
 
 class Settings:
@@ -21,7 +21,7 @@ class Settings:
 
     # Model names
     chat_model: str = os.getenv("OPENAI_CHAT_MODEL", "gpt-4o-mini")
-    embed_model: str = os.getenv("OPENAI_EMBED_MODEL", "text-embedding-3-small")
+    embed_model: str = os.getenv("EMBED_MODEL", "models/gemini-embedding-001")
 
     # Vector store
     chroma_persist_dir: str = os.getenv("CHROMA_PERSIST_DIR", "./chroma_db")

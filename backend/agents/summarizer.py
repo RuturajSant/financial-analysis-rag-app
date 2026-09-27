@@ -8,7 +8,7 @@ Design (from references/orchestration.md):
 from __future__ import annotations
 
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
-from backend.core.llm_provider import get_chat_llm
+from backend.core.llm_provider import extract_text, get_chat_llm
 
 from backend.agents.state import GraphState
 from backend.core.logger import get_logger
@@ -46,7 +46,7 @@ def _map_reduce_summary(chunks: list[dict], llm: ChatOpenAI) -> str:
                 SystemMessage(content=_MAP_SYSTEM),
                 HumanMessage(content=chunk["text"]),
             ])
-            chunk_summaries.append(resp.content.strip())
+            chunk_summaries.append(extract_text(resp.content).strip())
         except Exception as exc:
             logger.warning("map_chunk_failed", extra={"chunk_index": i, "error": str(exc)})
             chunk_summaries.append("[Summary unavailable for this section]")
@@ -58,7 +58,7 @@ def _map_reduce_summary(chunks: list[dict], llm: ChatOpenAI) -> str:
             SystemMessage(content=_REDUCE_SYSTEM),
             HumanMessage(content=combined),
         ])
-        return final.content.strip()
+        return extract_text(final.content).strip()
     except Exception as exc:
         logger.error("reduce_failed", extra={"error": str(exc)})
         return combined  # fallback: return concatenated chunk summaries
@@ -68,7 +68,7 @@ def summarize(state: GraphState) -> GraphState:
     """Summary Agent node — whole-report (map-reduce) or section (single-pass)."""
     doc_id = state["doc_id"]
     last_message = state["messages"][-1]
-    query = last_message.content if hasattr(last_message, "content") else str(last_message)
+    query = extract_text(last_message.content) if hasattr(last_message, "content") else str(last_message)
 
     # Detect whether this is a whole-report or section request
     whole_report_signals = {"summary", "summarize", "overview", "executive summary", "whole", "entire", "full report"}
@@ -97,7 +97,7 @@ def summarize(state: GraphState) -> GraphState:
                 SystemMessage(content=_SECTION_SYSTEM),
                 HumanMessage(content=f"Section context:\n{context}\n\nUser request: {query}"),
             ])
-            summary = resp.content.strip()
+            summary = extract_text(resp.content).strip()
             chunks = chunks
 
     except Exception as exc:
