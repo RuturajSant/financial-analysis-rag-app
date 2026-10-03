@@ -19,11 +19,13 @@ from backend.ingestion.vector_store import hybrid_search
 logger = get_logger(__name__)
 
 _SYSTEM_PROMPT = """\
-You are a financial document analyst. Answer the user's question based ONLY on the provided document excerpts.
+You are an expert financial document analyst. Answer the user's question accurately, directly, and thoroughly based on the provided document excerpts.
 Rules:
-- Answer concisely and directly.
-- If the answer is not in the provided context, say "I could not find this information in the document."
+- Document excerpts may contain financial statement tables (e.g. Balance Sheets, Income Statements) with columns for dates (e.g. 31st March 2026 vs 31st March 2025) and rows for line items (e.g. Non-current liabilities, Current liabilities).
+- Carefully parse table columns and line items to provide clear financial breakdowns.
+- Format tabular breakdowns cleanly using bullet points or markdown tables.
 - Do NOT invent numbers or facts not present in the context.
+- If the required details are genuinely missing from the context, clearly explain what is missing.
 - Do NOT include citation markers in your answer text — citations will be appended separately.
 """
 
@@ -47,16 +49,24 @@ def _maybe_rewrite_query(state: GraphState, query: str) -> str:
     Rewrite vague pronoun-heavy follow-ups into specific retrievable queries.
     Only invoked when the query contains follow-up signals (short + pronouns).
     """
-    follow_up_signals = {"it", "this", "that", "they", "them", "last year", "previous", "prior"}
+    follow_up_signals = {
+        "it", "this", "that", "they", "them", "last year", "previous", "prior",
+        "last", "former", "metric", "again", "above", "mentioned", "what was", "same"
+    }
     words = query.lower().split()
-    if len(words) > 6 or not any(w in follow_up_signals for w in words):
+    if len(words) > 8 or not any(w in query.lower() for w in follow_up_signals):
         return query  # specific enough — skip rewrite
 
-    # Build context from last 2 turns
+    # Build context from previous turns (excluding the current query at state["messages"][-1])
     history_turns = []
-    for msg in state["messages"][-4:]:
-        role = "User" if isinstance(msg, HumanMessage) else "Assistant"
-        history_turns.append(f"{role}: {extract_text(msg.content)[:200]}")
+    prev_messages = state.get("messages", [])[:-1]
+    for msg in prev_messages[-4:]:
+        role = "User" if getattr(msg, "type", "") == "human" or type(msg).__name__ == "HumanMessage" else "Assistant"
+        history_turns.append(f"{role}: {extract_text(getattr(msg, 'content', str(msg)))[:200]}")
+
+    if not history_turns:
+        return query
+
     history = "\n".join(history_turns)
 
     rewrite_prompt = (
@@ -110,11 +120,23 @@ def retrieve_and_answer(state: GraphState) -> GraphState:
 
     llm = get_chat_llm(temperature=0.1)
 
+    # Build message payload including previous conversation history
+    messages_payload = [SystemMessage(content=_SYSTEM_PROMPT)]
+    prev_messages = state.get("messages", [])[:-1]
+    for msg in prev_messages[-4:]:
+        msg_type = getattr(msg, "type", "")
+        content = extract_text(getattr(msg, "content", str(msg)))
+        if msg_type == "human" or type(msg).__name__ == "HumanMessage":
+            messages_payload.append(HumanMessage(content=content))
+        elif msg_type == "ai" or type(msg).__name__ == "AIMessage":
+            messages_payload.append(AIMessage(content=content))
+
+    messages_payload.append(
+        HumanMessage(content=f"Document context:\n{context_str}\n\nQuestion: {raw_query}")
+    )
+
     try:
-        response = llm.invoke([
-            SystemMessage(content=_SYSTEM_PROMPT),
-            HumanMessage(content=f"Document context:\n{context_str}\n\nQuestion: {raw_query}"),
-        ])
+        response = llm.invoke(messages_payload)
         answer = extract_text(response.content).strip()
     except Exception as exc:
         logger.error("llm_generation_failed", extra={"error": str(exc)})

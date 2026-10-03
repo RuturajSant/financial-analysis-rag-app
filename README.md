@@ -169,6 +169,8 @@ Edit `.env` in VS Code to supply your API Key (e.g. OpenAI):
 OPENAI_API_KEY=sk-proj-your-openai-api-key-here
 LLM_PROVIDER=openai
 OPENAI_CHAT_MODEL=gpt-4o-mini
+EMBED_MODEL=google/embeddinggemma-300m
+# HF_TOKEN=your_huggingface_token_if_accessing_gated_models
 CHROMA_PERSIST_DIR=./chroma_db
 SQLITE_CHECKPOINT_PATH=./checkpoints.db
 ENABLE_SESSION_PERSISTENCE=true

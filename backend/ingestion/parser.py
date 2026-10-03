@@ -44,11 +44,12 @@ def _detect_footnote(line: str) -> bool:
 
 
 def _table_to_text(table_data: list[list[str | None]]) -> str:
-    """Convert pdfplumber table (list of rows) to a tab-separated text representation."""
+    """Convert pdfplumber table (list of rows) to a Markdown-formatted table."""
     rows = []
     for row in table_data:
-        cleaned = [cell.strip() if cell else "" for cell in row]
-        rows.append("\t".join(cleaned))
+        cleaned = [cell.replace("\n", " ").strip() if cell else "" for cell in row]
+        if any(cleaned):
+            rows.append("| " + " | ".join(cleaned) + " |")
     return "\n".join(rows)
 
 
@@ -75,7 +76,8 @@ def parse_pdf(pdf_path: str | Path) -> list[ParsedBlock]:
 
             # Extract table bounding boxes so we can subtract them from text
             tables = page.extract_tables()
-            table_bboxes = [t.bbox for t in page.find_tables()] if hasattr(page, "find_tables") else []
+            if not tables:
+                tables = page.extract_tables(table_settings={"vertical_strategy": "text", "horizontal_strategy": "text"})
 
             # ── Extract tables as atomic blocks ──────────────────────────────
             for t_idx, table_data in enumerate(tables):

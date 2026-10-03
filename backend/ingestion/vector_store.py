@@ -13,7 +13,6 @@ from typing import Any
 
 import chromadb
 from chromadb import Collection
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from rank_bm25 import BM25Okapi
 from sentence_transformers import CrossEncoder
 
@@ -26,18 +25,55 @@ logger = get_logger(__name__)
 EXPECTED_EMBED_MODEL = settings.embed_model
 
 # Lazy singletons
-_embedder: GoogleGenerativeAIEmbeddings | None = None
+_embedder: Any | None = None
 _reranker: CrossEncoder | None = None
 _chroma_client: chromadb.PersistentClient | None = None
 
 
-def _get_embedder() -> GoogleGenerativeAIEmbeddings:
+def _get_embedder() -> Any:
     global _embedder
     if _embedder is None:
-        _embedder = GoogleGenerativeAIEmbeddings(
-            model=settings.embed_model,
-            google_api_key=settings.google_api_key,
-        )
+        model_name = settings.embed_model
+        logger.info("loading_embedder", extra={"model": model_name})
+        if model_name.startswith("models/") or model_name.startswith("text-embedding"):
+            from langchain_google_genai import GoogleGenerativeAIEmbeddings
+            _embedder = GoogleGenerativeAIEmbeddings(
+                model=model_name,
+                google_api_key=settings.google_api_key,
+            )
+        else:
+            try:
+                from langchain_huggingface import HuggingFaceEmbeddings
+            except ImportError:
+                from langchain_community.embeddings import HuggingFaceEmbeddings
+
+            model_kwargs = {"device": "cpu"}
+            if settings.hf_token:
+                model_kwargs["token"] = settings.hf_token
+
+            try:
+                _embedder = HuggingFaceEmbeddings(
+                    model_name=model_name,
+                    model_kwargs=model_kwargs,
+                    encode_kwargs={"normalize_embeddings": True},
+                )
+            except Exception as exc:
+                exc_str = str(exc).lower()
+                if "gated repo" in exc_str or "403" in exc_str or "forbidden" in exc_str:
+                    logger.warning(
+                        "embedder_gated_repo_fallback",
+                        extra={
+                            "requested_model": model_name,
+                            "reason": "Hugging Face model requires access or HF_TOKEN. Falling back to BAAI/bge-small-en-v1.5",
+                        },
+                    )
+                    _embedder = HuggingFaceEmbeddings(
+                        model_name="BAAI/bge-small-en-v1.5",
+                        model_kwargs={"device": "cpu"},
+                        encode_kwargs={"normalize_embeddings": True},
+                    )
+                else:
+                    raise exc
     return _embedder
 
 

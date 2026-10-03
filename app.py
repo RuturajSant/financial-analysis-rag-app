@@ -7,6 +7,7 @@ Layout:
 """
 from __future__ import annotations
 
+import json
 import os
 import tempfile
 import uuid
@@ -43,20 +44,81 @@ def get_ingest_fn():
     return ingest_document
 
 
+# ── Session persistence helpers ───────────────────────────────────────────────
+_SESSION_FILE = Path("./metadata/last_session.json")
+
+
+def _save_session() -> None:
+    """Write doc_id, doc_name, thread_id to disk."""
+    _SESSION_FILE.parent.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "thread_id": st.session_state.thread_id,
+        "doc_id": st.session_state.doc_id,
+        "doc_name": st.session_state.doc_name,
+    }
+    _SESSION_FILE.write_text(json.dumps(payload), encoding="utf-8")
+
+
+def _load_session() -> dict | None:
+    """Return saved session dict or None if file is missing / corrupt."""
+    try:
+        return json.loads(_SESSION_FILE.read_text(encoding="utf-8"))
+    except Exception:
+        return None
+
+
+def _clear_session_file() -> None:
+    """Delete the persisted session file."""
+    try:
+        _SESSION_FILE.unlink(missing_ok=True)
+    except Exception:
+        pass
+
+
 # ── Session state init ─────────────────────────────────────────────────────────
 def init_session():
-    defaults = {
-        "thread_id": str(uuid.uuid4()),
-        "doc_id": None,
-        "doc_name": None,
-        "messages": [],          # list of {"role": str, "content": str}
-        "kpi_result": None,
-        "ingested": False,
-        "persistence_enabled": True,
-    }
-    for key, val in defaults.items():
-        if key not in st.session_state:
-            st.session_state[key] = val
+    if "_session_initialised" in st.session_state:
+        return
+    st.session_state["_session_initialised"] = True
+
+    # Defaults
+    st.session_state.setdefault("thread_id", str(uuid.uuid4()))
+    st.session_state.setdefault("doc_id", None)
+    st.session_state.setdefault("doc_name", None)
+    st.session_state.setdefault("messages", [])
+    st.session_state.setdefault("kpi_result", None)
+    st.session_state.setdefault("ingested", False)
+    st.session_state.setdefault("persistence_enabled", True)
+
+    # Restore last session from disk (if any)
+    saved = _load_session()
+    if saved and saved.get("doc_id"):
+        st.session_state.thread_id = saved["thread_id"]
+        st.session_state.doc_id    = saved["doc_id"]
+        st.session_state.doc_name  = saved["doc_name"]
+        st.session_state.ingested  = True
+
+        # Restore chat history & KPI results from LangGraph checkpointer into Streamlit UI
+        try:
+            graph = get_graph(st.session_state.persistence_enabled)
+            state_snap = graph.get_state({"configurable": {"thread_id": st.session_state.thread_id}})
+            if state_snap and state_snap.values:
+                msgs = state_snap.values.get("messages", [])
+                restored_msgs = []
+                for msg in msgs:
+                    msg_type = getattr(msg, "type", "")
+                    content = getattr(msg, "content", str(msg))
+                    if msg_type == "human" or type(msg).__name__ == "HumanMessage":
+                        restored_msgs.append({"role": "user", "content": content})
+                    elif msg_type == "ai" or type(msg).__name__ == "AIMessage":
+                        restored_msgs.append({"role": "assistant", "content": content})
+                if restored_msgs:
+                    st.session_state.messages = restored_msgs
+
+                if state_snap.values.get("kpi_result"):
+                    st.session_state.kpi_result = state_snap.values["kpi_result"]
+        except Exception:
+            pass
 
 
 init_session()
@@ -286,6 +348,7 @@ with st.sidebar:
                 st.session_state.messages = []
                 st.session_state.kpi_result = None
                 os.unlink(tmp_path)
+                _save_session()  # persist doc_id + thread_id to disk
                 st.success("Document indexed!")
             except Exception as exc:
                 st.error(f"Ingestion failed: {exc}")
@@ -313,7 +376,9 @@ with st.sidebar:
         st.markdown(f"<div style='color:#64748b; font-size:12px; margin-top:6px;'>📄 {st.session_state.doc_name}</div>", unsafe_allow_html=True)
 
         if st.button("Clear Session", use_container_width=True):
-            for key in ["doc_id", "doc_name", "messages", "kpi_result", "ingested", "thread_id"]:
+            _clear_session_file()  # remove persisted session
+            for key in ["doc_id", "doc_name", "messages", "kpi_result", "ingested",
+                        "thread_id", "_session_initialised"]:
                 st.session_state.pop(key, None)
             st.rerun()
     else:

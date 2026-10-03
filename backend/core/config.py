@@ -19,9 +19,12 @@ class Settings:
     anthropic_api_key: str = os.getenv("ANTHROPIC_API_KEY", "")
     google_api_key: str = os.getenv("GOOGLE_API_KEY", "")
 
+    # Hugging Face Token (optional, for gated models like google/embeddinggemma-300m)
+    hf_token: str = os.getenv("HF_TOKEN", os.getenv("HUGGINGFACEHUB_API_TOKEN", ""))
+
     # Model names
     chat_model: str = os.getenv("OPENAI_CHAT_MODEL", "gpt-4o-mini")
-    embed_model: str = os.getenv("EMBED_MODEL", "models/gemini-embedding-001")
+    embed_model: str = os.getenv("EMBED_MODEL", "google/embeddinggemma-300m")
 
     # Vector store
     chroma_persist_dir: str = os.getenv("CHROMA_PERSIST_DIR", "./chroma_db")
@@ -34,12 +37,12 @@ class Settings:
     log_file: str = os.getenv("LOG_FILE", "./logs/app.log")
 
     # Retrieval
-    retrieval_top_k: int = int(os.getenv("RETRIEVAL_TOP_K", "8"))
-    retrieval_rerank_top_n: int = int(os.getenv("RETRIEVAL_RERANK_TOP_N", "5"))
+    retrieval_top_k: int = int(os.getenv("RETRIEVAL_TOP_K", "10"))
+    retrieval_rerank_top_n: int = int(os.getenv("RETRIEVAL_RERANK_TOP_N", "6"))
 
     # Chunking
-    narrative_chunk_size: int = int(os.getenv("NARRATIVE_CHUNK_SIZE", "500"))
-    narrative_chunk_overlap: int = int(os.getenv("NARRATIVE_CHUNK_OVERLAP", "50"))
+    narrative_chunk_size: int = int(os.getenv("NARRATIVE_CHUNK_SIZE", "1200"))
+    narrative_chunk_overlap: int = int(os.getenv("NARRATIVE_CHUNK_OVERLAP", "200"))
 
 
 settings = Settings()

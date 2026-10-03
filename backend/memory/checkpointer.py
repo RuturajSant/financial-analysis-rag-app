@@ -34,9 +34,14 @@ def get_checkpointer():
 
     if use_sqlite:
         try:
+            import sqlite3
             from langgraph.checkpoint.sqlite import SqliteSaver
 
-            checkpointer = SqliteSaver.from_conn_string(path)
+            dirname = os.path.dirname(os.path.abspath(path))
+            if dirname:
+                os.makedirs(dirname, exist_ok=True)
+            conn = sqlite3.connect(path, check_same_thread=False)
+            checkpointer = SqliteSaver(conn)
             logger.info("checkpointer_sqlite", extra={"path": path})
             return checkpointer
         except ImportError:
